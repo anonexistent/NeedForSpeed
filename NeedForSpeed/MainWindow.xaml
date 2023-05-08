@@ -7,36 +7,61 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:NeedForSpeed"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="MediumAquamarine">
+        Title="MainWindow" Height="550" Width="800" Background="MediumAquamarine" Closed="Window_Closed">
 
     <Grid>
-
-
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="ss" HorizontalAlignment="Center">
-            <Label Content="количество поворотов в гонке" FontSize="14" FontWeight="Bold"/>
-            <Button x:Name="btnPlus" Content="+" HorizontalAlignment="Center" FontSize="14" Click="Button_Count_Click"/>
-            <TextBox x:Name="tbCount" Text="{Binding preCircle}" TextAlignment="Center" IsReadOnly="True" FontSize="14" Margin="5" Background="#FF8BFFD8"/>
-            <Button x:Name="btnMinus" Content="–" HorizontalAlignment="Center" FontSize="16" Click="Button_Count_Click"/>
-        </StackPanel>
+        <TextBlock x:Name="tbLogs" Grid.Row="4" Text="logs" FontSize="16" TextAlignment="Center" Grid.ColumnSpan="3" Background="#FFA8F1D9" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"/>
 
-        <TextBox x:Name="tb1" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10" Background="AliceBlue"/>
+        <TextBox x:Name="tb1" Text="logs logs logs" Margin="5" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="AliceBlue"/>
 
-        <Button x:Name="btnStart" Content="start" FontSize="20" Grid.Row="2" Margin="50"/>
+        <Button x:Name="btnStart" Content="start" Padding="-10" FontSize="20" Grid.Row="3" Margin="50"/>
+
+        <Button Grid.Row="2" Click="Button_Click" Visibility="Collapsed"/>
+
+        <Canvas Name="canvas" Grid.Row="2" Visibility="Collapsed" Cursor=""> 
+           
+            <Border BorderBrush="Gray" CornerRadius="0,10,10,10" BorderThickness="2" Name="brd"
+                Canvas.Bottom="{Binding ElementName=btn, Path=ActualHeight}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Margin="5" Padding="5" TextWrapping="Wrap">Какой-то текст</TextBox>
+                    <StackPanel Grid.Column="1">
+                        <Button Margin="5" Padding="5">1 Button</Button>
+                        <Button Margin="5,0,5,5" Padding="5">2 Button</Button>
+                    </StackPanel>                    
+                </Grid>
+            </Border>
+            <Button Width="100" Padding="5" Name="btn" Content="ClickMee!" Click="btn_Click"></Button>
+        </Canvas>
 
 
+        <materialDesign:ColorZone Padding="16" Mode="Inverted" Grid.ColumnSpan="3">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="btnSettings" Style="{StaticResource MaterialDesignFlatLightButton}" Click="Button_Click">
+                        <materialDesign:PackIcon Kind="Cog" />
+                    </Button>
+                    <TextBlock VerticalAlignment="Center" Text="Races" FontSize="20" Margin="25,0,25,0"/>
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:ColorZone>
 
-
+        <!--<local:Page1 Grid.RowSpan="4" HorizontalAlignment="Left"/>-->
     </Grid>
 </Window>

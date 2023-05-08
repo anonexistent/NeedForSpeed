@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -21,32 +22,57 @@ namespace NeedForSpeed
     public partial class MainWindow : Window
     {
         Random uuu;
-        int preCircle = 1;
-        int circle = 0;
+        Settings settings;
 
         public MainWindow()
         {
             InitializeComponent();
+            settings = new();
 
             uuu = new();
 
             //Test1();
             //Test2();
 
+            brd.Height = 0;
+
             btnStart.Click += BtnStart_Click;
         }
+
+        private bool IsToggle;
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation da = new DoubleAnimation();
+            if (!IsToggle)
+            {
+                da.To = 90;
+                da.Duration = TimeSpan.FromSeconds(1);
+                brd.BeginAnimation(Border.HeightProperty, da);
+                IsToggle = true;
+            }
+            else
+            {
+                da.To = 0;
+                da.Duration = TimeSpan.FromSeconds(1);
+                brd.BeginAnimation(Border.HeightProperty, da);
+                IsToggle = false;
+            }
+        }
+    
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
             tb1.Text = "\t\tLogs\n\n";
             Test2();
             ClearGame();
+            
         }
 
         private void ClearGame()
         {
-            preCircle = 1;
-            circle = 0;
+            settings.preCircle = 1;
+            settings.circle = 0;
         }
 
         private void Test2()
@@ -55,7 +81,7 @@ namespace NeedForSpeed
             Subject[] sClone = new Subject[4];
             s1.CopyTo(sClone);
 
-            for (int i = 0; i < preCircle; i++)
+            for (int i = 0; i < settings.preCircle; i++)
             {
                 tb1.Text += ch(s1, 0.1f);
             }
@@ -63,9 +89,9 @@ namespace NeedForSpeed
 
         string ch(List<Subject> a, float killChance)
         {
-            circle++;
+            settings.circle++;
 
-            string logs = $"—\t{circle} challenge\t—\n";
+            string logs = $"—\t{settings.circle} challenge\t—\n";
 
             bool killed = IsSuccessful(killChance);
             logs += killed.ToString() +'\n';
@@ -80,7 +106,7 @@ namespace NeedForSpeed
 
             foreach (Subject s in a)
             {
-                if (s.IsAlive) s.Info += circle;
+                if (s.IsAlive) s.Info += settings.circle;
             }
 
             logs += string.Join(',', a.Select(x => x.Info)) + '\n';
@@ -119,11 +145,19 @@ namespace NeedForSpeed
             tb1.Text = a.ToString();
         }
 
-        private void Button_Count_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (((Button)sender).Name == "btnPlus") preCircle++;
-            if (((Button)sender).Name == "btnMinus") preCircle--;        
-            tbCount.Text = preCircle.ToString();
+            settings.ShowDialog();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            settings.Close();
+        }
+
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
