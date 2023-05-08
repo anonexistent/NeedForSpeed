@@ -1,0 +1,56 @@
+﻿namespace NeedForSpeed
+{
+    internal class Program
+    {
+        public static Random uuu = new();
+
+        static void Print(object a)
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(a.ToString());
+            Console.ResetColor();
+        }
+
+        static bool DeathGame()
+        {
+            bool alive = true;
+
+            List<bool> alives = new()
+            {
+                GenerateEvent(0.3f),
+                GenerateEvent(0.6f),
+                GenerateEvent(0.4f),
+                GenerateEvent(0.2f)
+            };
+
+            alive = alives[0] | alives[1] | alives[2] | alives[3];
+
+            return alive;
+        }
+
+        static bool GenerateEvent(double cap) => uuu.NextDouble() <= cap ? true : false;
+
+        static void Main(string[] args)
+        {
+            //Console.WriteLine($"!!!WELCOME!!!\nits DEatH GaME!! as a rule in race 140 man from 100_000 will die \nand\n\t\tbe careful");
+            //Console.ReadKey();
+            //Console.Clear();
+
+            double countGoodRaces = 0;
+
+            Console.Write("how much races need >> ");
+            double countRaces = int.Parse(Console.ReadLine());
+
+            bool temp = false;
+            for (int i = 0; i < countRaces; i++)
+            {
+                temp = DeathGame();
+                Console.Write($"race{i}:\t");
+                if (temp) countGoodRaces++;
+                Print(temp);
+            }
+            Console.WriteLine($"\nchance stand alive a racer:\t{countGoodRaces / countRaces:f5}\t({countGoodRaces}/{countRaces})");
+        }
+    }
+}
