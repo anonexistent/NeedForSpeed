@@ -26,6 +26,11 @@ namespace NeedForSpeed
             //Challenges = new bool[4] { false, false, false, false };
             Info = string.Empty;
         }
+        public Subject(string info)
+        {
+            IsAlive = true;
+            Info = info;
+        }
 
         //void MakeInfo()
         //{
