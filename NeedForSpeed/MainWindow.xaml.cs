@@ -21,6 +21,8 @@ namespace NeedForSpeed
     public partial class MainWindow : Window
     {
         Random uuu;
+        int preCircle = 1;
+        int circle = 0;
 
         public MainWindow()
         {
@@ -29,39 +31,59 @@ namespace NeedForSpeed
             uuu = new();
 
             //Test1();
+            //Test2();
+
+            btnStart.Click += BtnStart_Click;
+        }
+
+        private void BtnStart_Click(object sender, RoutedEventArgs e)
+        {
+            tb1.Text = "\t\tLogs\n\n";
             Test2();
+            ClearGame();
+        }
+
+        private void ClearGame()
+        {
+            preCircle = 1;
+            circle = 0;
         }
 
         private void Test2()
         {
             List<Subject> s1 = new List<Subject>() { new("no 1*"),new("no 2*"),new("no 3*"),new("no 4*") };
+            Subject[] sClone = new Subject[4];
+            s1.CopyTo(sClone);
 
-            tb1.Text = firstCh(s1, 0.3f);
+            for (int i = 0; i < preCircle; i++)
+            {
+                tb1.Text += ch(s1, 0.1f);
+            }
         }
 
-        string firstCh(List<Subject> a, float killChance)
+        string ch(List<Subject> a, float killChance)
         {
-            string logs = string.Empty;
+            circle++;
 
-            bool firstKill = IsSuccessful(killChance);
-            logs += firstKill.ToString() +'\n';
+            string logs = $"—\t{circle} challenge\t—\n";
 
+            bool killed = IsSuccessful(killChance);
+            logs += killed.ToString() +'\n';
 
-            if (firstKill)
+            if (killed)
             {
-                int whoDie = uuu.Next(0, a.Count);                
+                int whoDie = uuu.Next(0, a.Count);
                 var temp = a[whoDie];
-                logs += whoDie.ToString()+'\n' + temp.Info +'\n';
+                logs += temp.Info +'\n';
                 a.Remove(temp);
             }
 
             foreach (Subject s in a)
             {
-                if(s.IsAlive) s.Info += "1";
+                if (s.IsAlive) s.Info += circle;
             }
 
-            logs += string.Join(',', a.Select(x=>x.Info));
-
+            logs += string.Join(',', a.Select(x => x.Info)) + '\n';
             return logs;
         }
 
@@ -95,6 +117,13 @@ namespace NeedForSpeed
                 if (b[i]) a++;
             }
             tb1.Text = a.ToString();
+        }
+
+        private void Button_Count_Click(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).Name == "btnPlus") preCircle++;
+            if (((Button)sender).Name == "btnMinus") preCircle--;        
+            tbCount.Text = preCircle.ToString();
         }
     }
 }
