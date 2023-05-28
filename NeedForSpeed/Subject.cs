@@ -17,7 +17,7 @@ namespace NeedForSpeed
         //public bool[] Challenges { get { return Challenges; } set { Challenges = value; 
         //                                                                    //MakeInfo(); 
         //                                                                } }
-
+        public int Id { get; set; }
         public string Info { get; set; }
 
         public Subject()
