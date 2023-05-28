@@ -7,7 +7,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:NeedForSpeed"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="800" Background="MediumAquamarine" Closed="Window_Closed">
+        Title="Races" Height="550" Width="800" Background="MediumAquamarine" Closed="Window_Closed" Cursor="">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,14 +25,29 @@
 
         <TextBlock x:Name="tbLogs" Grid.Row="4" Text="logs" FontSize="16" TextAlignment="Center" Grid.ColumnSpan="3" Background="#FFA8F1D9" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"/>
 
-        <TextBox x:Name="tb1" Text="logs logs logs" Margin="5" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="AliceBlue"/>
+        <Canvas x:Name="mainGameZoneCanvas" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3" Background="MediumSeaGreen" Margin="15">
+            <ListView x:Name="lVmain">
+                <!--<ListViewItem Width="328" Height="62" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">-->
+                <Canvas Name="RaceTrackCanvas" Height="200" Margin="5, 5, 5, 5" Width="475">
+                        <Rectangle x:Name="startLine" Fill="Gray" Width="10" Height="{Binding ElementName=RaceTrackCanvas, Path=ActualHeight}" Canvas.Left="0"/>
+                        <Rectangle x:Name="finishLine" Fill="Green" Width="10" Height="{Binding ElementName=RaceTrackCanvas, Path=ActualHeight}" Canvas.Right="0"/>
 
-        <Button x:Name="btnStart" Content="start" Padding="-10" FontSize="20" Grid.Row="3" Margin="50"/>
+                    </Canvas>
+                <!--</ListViewItem>-->
+            </ListView>
 
-        <Button Grid.Row="2" Click="Button_Click" Visibility="Collapsed"/>
+        </Canvas>
 
-        <Canvas Name="canvas" Grid.Row="2" Visibility="Collapsed" Cursor=""> 
-           
+        <TextBlock x:Name="infoD" Grid.Row="1" VerticalAlignment="Center" Padding="10" Text="перед началом игры задайте параметры" FontSize="20" Margin="15" TextWrapping="WrapWithOverflow" Background="#FF66CD8D" TextAlignment="Center"/>
+
+        <TextBox x:Name="tb1" Text="logs logs logs" Visibility="Collapsed" Margin="5" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="AliceBlue"/>
+
+        <Button x:Name="btnStart" IsEnabled="False" Content="start" Padding="-10" FontSize="20" Grid.Row="3" Margin="50"/>
+
+        <Button x:Name="btnStartingGaming"  Grid.Row="2" Click="Button_Click" Visibility="Collapsed" Cursor="Hand"/>
+
+        <Canvas Name="canvas" Grid.Row="2" Visibility="Collapsed" Cursor="">
+
             <Border BorderBrush="Gray" CornerRadius="0,10,10,10" BorderThickness="2" Name="brd"
                 Canvas.Bottom="{Binding ElementName=btn, Path=ActualHeight}">
                 <Grid>
@@ -44,7 +59,7 @@
                     <StackPanel Grid.Column="1">
                         <Button Margin="5" Padding="5">1 Button</Button>
                         <Button Margin="5,0,5,5" Padding="5">2 Button</Button>
-                    </StackPanel>                    
+                    </StackPanel>
                 </Grid>
             </Border>
             <Button Width="100" Padding="5" Name="btn" Content="ClickMee!" Click="btn_Click"></Button>

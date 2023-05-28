@@ -19,8 +19,10 @@ namespace NeedForSpeed
     /// </summary>
     public partial class Settings : Window
     {
-        public int preCircle = 1;
+        public int preCircle = 0;
         public int circle = 0;
+        public int preCount = 5;
+        public int count = 0;
 
         public Settings()
         {
@@ -29,9 +31,28 @@ namespace NeedForSpeed
 
         private void Button_Count_Click(object sender, RoutedEventArgs e)
         {
-            if (((Button)sender).Name == "btnPlus") preCircle++;
-            if (((Button)sender).Name == "btnMinus") preCircle--;
+
+            switch (((Button)sender).Name)
+            {
+                case "btnPlus":
+                    preCircle++;
+                    break;
+                case "btnMinus":
+                    preCircle--; 
+                    break;
+                case "btnPlus1":
+                    preCount++; 
+                    break;
+                case "btnMinus1":
+                    preCircle--; 
+                    break;
+
+                default:
+                    break;
+            }
+
             tbCount.Text = preCircle.ToString();
+            tbCount1.Text = preCount.ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
